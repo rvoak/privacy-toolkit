@@ -3,7 +3,6 @@ import numpy as np
 
 def get_k_anonymity(df,quasi_identifiers):
     """
-    
     Function to return the minimum value of k for which a table satisfies k-Anonymity
     
     Params:
@@ -13,8 +12,7 @@ def get_k_anonymity(df,quasi_identifiers):
     Returns:
         A python dictionary which consists of two items:
             k: The minimum value of k for which df satisfies k-Anonymity
-            equivalence_classes: List of tuples; each tuple represents the equivalence class that satisfies k-Anonymity
-    
+            equivalence_classes: List of tuples; each tuple represents the equivalence class that satisfies k-Anonymity 
     """
     
     # Check that quasi_identifiers is a subset of dataframe columns
@@ -48,7 +46,6 @@ def get_k_anonymity(df,quasi_identifiers):
 
 def get_k_reverse_membership(df,equivalence_class):
     """
-    
     Function to compute reverse membership map and find how many tuples in the class
     
     Params:
@@ -60,7 +57,6 @@ def get_k_reverse_membership(df,equivalence_class):
         
     Returns:
         Integer that denotes the size of the equivalence class in df 
-    
     """
     
     # Check that the QI are in columns 
@@ -75,4 +71,44 @@ def get_k_reverse_membership(df,equivalence_class):
     
     # Number of records in the resulting dataframe is the size of the equivalence class
     return df_local.shape[0]
+
+def get_full_k_anonymity_report(df, quasi_identifiers):
+    """
+    Function to find the minimum value of k for which each equivalence class of the given quasi_identifiers satisfies k-Anonymity, and return each equivalence class and corresponding value of k. 
+    
+    Params:
+        df: Pandas DataFrame which is to be tested 
+        quasi_identifiers: List of attributes; must be a subset of the columns of df
+        
+    Returns:
+       
+    """
+    # Check that quasi_identifiers is a subset of dataframe columns
+    assert set(quasi_identifiers).issubset(set(df.columns)), "One or more quasi identifiers is not in the data frame columns"
+    
+    # Make a copy for local manipulation
+    df_local = df.copy()
+    
+    # Add a summy column used for aggregation
+    # This is needed to access the aggregate in case quasi_identifiers are all of the dataframe columns
+    df_local['DUMMY_COUNTER'] = df_local[quasi_identifiers[0]].apply(lambda x: 1)
+    
+    # Group by quasi identifiers 
+    df_grouped = df_local.groupby(quasi_identifiers).count().reset_index()
+    equivalence_classes = []
+    k_values = []
+    
+    for i in range(df_grouped.shape[0]):
+        record = df_grouped.iloc[i]
+        equivalence_class = tuple(record[quasi_identifiers])
+        k = record['DUMMY_COUNTER']
+        equivalence_classes.append(equivalence_class)
+        k_values.append(k)
+        
+    return equivalence_classes, k_values
+        
+    
+    
+    
+    
 
