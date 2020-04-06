@@ -75,4 +75,44 @@ def get_full_l_diversity_report(df, quasi_identifiers, sensitive_attribute):
         l_values.append(l)
         
     return equivalence_classes, l_values
+
+
+def get_l_summary(df, sensitive_attribute, as_df = False):
+    
+    """
+    Function to examine the table for l-Diversity for all possible combinations of quasi identifiers.
+    
+    Parameters:
+        df: DataFrame to be examined
+        sensitive_attribute: Name of sensitive attribute
+        as_df: Bool indicating whether the result should be returned in the form of a DataFrame
+        
+    Returns:
+        Lists of quasi identifier combinations and corresponding l-value; can be in the form of a dataframe.
+    """
+    
+    assert sensitive_attribute in df.columns, "The sensitive attribute is not present in dataframe"
+
+    
+    quasi_identifier_combinations = []
+    l_values = []
+    
+    attr = df.columns.tolist()
+    attr.remove(sensitive_attribute)
+    
+    for i in range(1,len(attr)):
+        qi_combs = combinations(attr,i)
+        for qi_comb in qi_combs:
+            ld = get_l_diversity(df,qi_comb,sensitive_attribute)
+            quasi_identifier_combinations.append(qi_comb)
+            l_values.append(ld['l'])
+            
+    if as_df:
+        summary_df = pd.DataFrame({'Quasi_Identifiers':quasi_identifier_combinations,'L':l_values})
+        return summary_df
+    
+    return quasi_identifier_combinations, l_values
+
+
+
         
