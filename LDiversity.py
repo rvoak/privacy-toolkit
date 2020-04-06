@@ -1,6 +1,15 @@
+# +
+# KAnonymity.py 
+# Master library file for functions related to K-Anonymity 
+# Author: Rajvardhan Oak
+# Date: April 05 2020
+
 import pandas as pd
 import numpy as np 
 from itertools import combinations
+
+
+# -
 
 def get_l_diversity(df,quasi_identifiers, sensitive_attribute):
     """
@@ -33,8 +42,8 @@ def get_l_diversity(df,quasi_identifiers, sensitive_attribute):
                 'equivalence_classes':df_grouped_index}
     
     return response
-    
-    
+
+
 def get_full_l_diversity_report(df, quasi_identifiers, sensitive_attribute):
     """
         Function to find the minimum value of l for which each equivalence class of the given quasi_identifiers satisfies l- Diversity, and return each equivalence class and corresponding value of l. 

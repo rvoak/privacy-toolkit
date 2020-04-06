@@ -1,6 +1,15 @@
+# +
+# KAnonymity.py 
+# Master library file for functions related to K-Anonymity 
+# Author: Rajvardhan Oak
+# Date: April 05 2020
+
 import pandas as pd 
 import numpy as np 
 from itertools import combinations
+
+
+# -
 
 def get_k_anonymity(df,quasi_identifiers):
     """
