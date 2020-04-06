@@ -106,9 +106,38 @@ def get_full_k_anonymity_report(df, quasi_identifiers):
         k_values.append(k)
         
     return equivalence_classes, k_values
+
+
+def get_k_summary(df, as_df = False):
+    """
+    Function to examine the table for k-Anonymity for all possible combinations of quasi identifiers.
+    
+    Parameters:
+        df: DataFrame to be examined
+        as_df: Bool indicating whether the result should be returned in the form of a DataFrame
         
+    Returns:
+        Lists of quasi identifier combinations and corresponding k-value; can be in the form of a dataframe.
+    """
     
+    quasi_identifier_combinations = []
+    k_values = []
     
+    attr = df.columns 
     
+    for i in range(1,len(attr)):
+        qi_combs = combinations(attr,i)
+        for qi_comb in qi_combs:
+            ka = get_k_anonymity(df,qi_comb)
+            quasi_identifier_combinations.append(qi_comb)
+            k_values.append(ka['k'])
+            
+    if as_df:
+        summary_df = pd.DataFrame({'Quasi_Identifiers':quasi_identifier_combinations,'K':k_values})
+        return summary_df
     
+    return quasi_identifier_combinations, k_values
+
+    
+
 
