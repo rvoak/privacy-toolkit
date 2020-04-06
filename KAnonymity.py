@@ -1,5 +1,6 @@
 import pandas as pd 
 import numpy as np 
+from itertools import combinations
 
 def get_k_anonymity(df,quasi_identifiers):
     """

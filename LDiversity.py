@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np 
+from itertools import combinations
 
 def get_l_diversity(df,quasi_identifiers, sensitive_attribute):
     """
