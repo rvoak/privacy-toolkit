@@ -22,9 +22,9 @@ This module currently supports the following methods:
 
 ## _l_-Diversity
 This module currently supports the following methods:
-- `get_k_anonymity()`: This function takes in a DatFrame, the sensitive attribute and the set of quasi identifiers. It computes the value of _l_ for which the table satisfies _l_-Diversity with respect to those quasi identifiers.
-- `get_full_k_anonymity_report()`: This function takes in a DatFrame, the sensitive attribute and the set of quasi identifiers. It finds the minimum value of _l_ for which each equivalence class of the given quasi identifiers satisfies _l_-Diversity, and return each equivalence class and corresponding value of _l_.
-- `get_k_summary()`: This function takes in a DataFrame and examines _l_-Diversity for every possible combination of quasi identifiers. Returns lists of quasi identifier combinations and corresponding _l_-value.
+- `get_l_diversity()`: This function takes in a DatFrame, the sensitive attribute and the set of quasi identifiers. It computes the value of _l_ for which the table satisfies _l_-Diversity with respect to those quasi identifiers.
+- `get_full_l_diversity_report()`: This function takes in a DatFrame, the sensitive attribute and the set of quasi identifiers. It finds the minimum value of _l_ for which each equivalence class of the given quasi identifiers satisfies _l_-Diversity, and return each equivalence class and corresponding value of _l_.
+- `get_l_summary()`: This function takes in a DataFrame and examines _l_-Diversity for every possible combination of quasi identifiers. Returns lists of quasi identifier combinations and corresponding _l_-value.
 
 
 
